@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpriteAnimation : MonoBehaviour
 {
+    [SerializeField]GameManager gameManager;
     [SerializeField] Sprite[] sprites;
 
     [SerializeField] float timeFrame;
@@ -16,14 +17,20 @@ public class SpriteAnimation : MonoBehaviour
 
 
     }
-
+    private void Update()
+    {
+        if (gameManager == null)
+        {
+            gameManager = GameObject.FindAnyObjectByType<GameManager>();
+        }
+    }
     private void Start()
     {
         InvokeRepeating(nameof(Animation), timeFrame, timeFrame);
     }
     void Animation()
     {
-        if(GameManager.Instance.currentState == GameManager.GameState.InGame)
+        if(gameManager.currentState == GameState.InGame)
         {
             frameCurrent++;
             if (frameCurrent >= sprites.Length)

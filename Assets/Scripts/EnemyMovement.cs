@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField]GameManager gameManager;
     [SerializeField] float speed;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
@@ -17,20 +18,21 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-       
-    }
+        if (gameManager == null)
+        {
+            gameManager = GameObject.FindAnyObjectByType<GameManager>();
+        }
 
-    private void FixedUpdate()
-    {
-        if(GameManager.Instance.currentState == GameManager.GameState.InGame)
+        if (gameManager.currentState == GameState.InGame)
         {
             rb.velocity = speed * Vector2.left;
         }
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(GameManager.Instance.currentState == GameManager.GameState.InGame)
+        if(gameManager.currentState == GameState.InGame)
         {
             if (collision.gameObject.CompareTag("Wall"))
             {

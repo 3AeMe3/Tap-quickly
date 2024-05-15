@@ -5,22 +5,49 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
+
+    [SerializeField] GameManager gameManager;
     [SerializeField]ThrowItems throwItems;
     [SerializeField]TextMeshProUGUI textMeshProUGUI;
     public int score;
     [SerializeField] AudioClip grabSound;
     AudioSource audioSource;
 
+    [SerializeField] GameObject GameOverPanel;
+
+
+    private void Awake()
+    {
+     
+    }
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        score = 0;
+        score = 10;
         textMeshProUGUI.text = score.ToString();
     }
+    public void RestPoints()
+    {
+        score -= 2;
+        textMeshProUGUI.text = score.ToString();
+
+    }
+
     private void Update()
     {
-        
+        GameOver();
     }
+    void GameOver()
+    {
+        if(score <= 0)
+        {
+            //Game over 
+            gameManager.currentState = GameState.GameOver;
+            GameOverPanel.SetActive(true);
+
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Daikon"))

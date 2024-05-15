@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+public enum GameState { Start, InGame, GameOver }
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+  
     [SerializeField] Score score;
-    
-    
 
-    public enum GameState { Start,InGame, GameOver }
+
+
+    
     public GameState currentState;
 
 
@@ -24,15 +26,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+    
     }
 
     private void Start()
@@ -42,14 +36,18 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
 
-        
-       
-        if (score.score == 15 && !hasInstantiateEnemy)
+
+
+        if (currentState == GameState.InGame)
         {
-            
-            Instantiate(enemyPrefab, new Vector2(transform.position.x,2.55f), Quaternion.identity);
-            hasInstantiateEnemy = true;
-            audioSource.PlayOneShot(spawnEnemy,0.5f);
+            if (score.score == 15 && !hasInstantiateEnemy)
+            {
+
+                Instantiate(enemyPrefab, new Vector2(transform.position.x, 2.55f), Quaternion.identity);
+                hasInstantiateEnemy = true;
+                audioSource.PlayOneShot(spawnEnemy, 0.5f);
+            }
+
         }
 
 
@@ -68,6 +66,13 @@ public class GameManager : MonoBehaviour
     {
         currentState = GameState.InGame;
         menuManager.SetActive(false);
+
+    }
+
+    public void RealoadGame()
+    {
+     
+        SceneManager.LoadScene(0);
 
     }
     public void ExitGame()

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [SerializeField]GameManager gameManager;
     [SerializeField]float speed;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
@@ -22,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
 
-        if(GameManager.Instance.currentState == GameManager.GameState.InGame)
+        if(gameManager.currentState == GameState.InGame)
         {
             animator.SetBool("isRun", true);
             if (Input.GetMouseButtonDown(0))
@@ -53,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.Instance.currentState == GameManager.GameState.InGame)
+        if (gameManager.currentState == GameState.InGame)
         {
             rb.velocity = Vector2.right * speed;
         }

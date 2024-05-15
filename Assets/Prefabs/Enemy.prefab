@@ -207,4 +207,4 @@ MonoBehaviour:
   - {fileID: 2151933228826622219, guid: 62d1560fb61600d40bfa8b21b42b6a93, type: 3}
   - {fileID: 2151933228826622219, guid: 62d1560fb61600d40bfa8b21b42b6a93, type: 3}
   timeSpawn: 1
-  timeDelay: 2
+  timeDelay: 0.7
